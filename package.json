@@ -11,7 +11,12 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "eslint",
-    "start": "next start"
+    "start": "next start",
+    "backends": "python start_backends.py",
+    "backends:shell": "bash start_backends.sh",
+    "backends:windows": "start_backends.bat",
+    "stop-backends": "bash stop_backends.sh",
+    "stop-backends:windows": "stop_backends.bat"
   },
   "displayName": "Web3js Counter",
   "usecase": "Legacy",

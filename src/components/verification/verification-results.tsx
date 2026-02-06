@@ -1,8 +1,9 @@
 'use client';
 
 import React from 'react';
-import { CheckCircle2, AlertCircle } from 'lucide-react';
+import { CheckCircle2, AlertCircle, ArrowRight } from 'lucide-react';
 import { Card } from '@/components/ui/card';
+import { useRouter } from 'next/navigation';
 
 interface VerificationResult {
   success: boolean;
@@ -32,6 +33,8 @@ interface VerificationResultsProps {
 }
 
 export function VerificationResults({ result, onReset }: VerificationResultsProps) {
+  const router = useRouter();
+  
   if (!result) return null;
 
   const { verified, message, details, issues } = result;
@@ -218,12 +221,30 @@ export function VerificationResults({ result, onReset }: VerificationResultsProp
 
       {/* Actions */}
       <div className="flex justify-center gap-4">
-        <button
-          onClick={onReset}
-          className="px-6 py-3 bg-tigerGreen hover:bg-green-700 text-white rounded-xl font-medium shadow-lg transition-all"
-        >
-          Verify Again
-        </button>
+        {verified ? (
+          <>
+            <button
+              onClick={() => router.push('/loan/dashboard')}
+              className="px-8 py-4 bg-gradient-to-r from-tigerGreen to-green-600 hover:from-green-700 hover:to-green-800 text-white rounded-xl font-semibold shadow-lg transition-all duration-300 flex items-center gap-2 text-lg group"
+            >
+              Continue to Loan Dashboard
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </button>
+            <button
+              onClick={onReset}
+              className="px-6 py-4 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 rounded-xl font-medium shadow-lg transition-all"
+            >
+              Verify Again
+            </button>
+          </>
+        ) : (
+          <button
+            onClick={onReset}
+            className="px-6 py-3 bg-tigerGreen hover:bg-green-700 text-white rounded-xl font-medium shadow-lg transition-all"
+          >
+            Try Again
+          </button>
+        )}
       </div>
     </div>
   );
