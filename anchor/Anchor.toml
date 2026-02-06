@@ -7,6 +7,7 @@ skip-lint = false
 
 [programs.localnet]
 counter = "Count3AcZucFDPSFBAeHkQ6AvttieKUkyJ8HiQGhQwe"
+user-profile = "3FgL6wsAvfy1zNsnXmq13BLd6stXzSPWFvDjK5k2nCMZ"
 
 [registry]
 url = "https://api.apr.dev"
