@@ -16,5 +16,10 @@ export function computeTigerScore(f: WalletFeatures): number {
     if (score < 0) score = 0;
     if (score > 1000) score = 1000;
 
+    if (f.activityRegularityScore && f.activityRegularityScore > 40) {
+        score += 40;
+    }
+
+
     return score;
 }

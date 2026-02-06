@@ -46,3 +46,41 @@ nftCount: nftLike
 };
 }
 
+export async function getActivityRegularity(wallet: string) {
+const pubkey = new PublicKey(wallet);
+
+const sigs = await connection.getSignaturesForAddress(pubkey, {
+limit: 500
+});
+
+const now = Date.now();
+const THIRTY_DAYS = 30 * 24 * 60 * 60 * 1000;
+
+const recent = sigs.filter(s =>
+s.blockTime && (now - s.blockTime * 1000) <= THIRTY_DAYS
+);
+
+const days = new Set(
+recent.map(s =>
+new Date(s.blockTime! * 1000).toISOString().slice(0, 10)
+)
+);
+
+const activeDaysLast30 = days.size;
+const avgTxPerActiveDay =
+activeDaysLast30 === 0 ? 0 : recent.length / activeDaysLast30;
+
+// simple score model (0–100)
+const activityRegularityScore = Math.min(
+100,
+activeDaysLast30 * 3 + avgTxPerActiveDay * 10
+);
+
+return {
+activeDaysLast30,
+avgTxPerActiveDay: Number(avgTxPerActiveDay.toFixed(2)),
+activityRegularityScore: Math.round(activityRegularityScore)
+};
+}
+
+

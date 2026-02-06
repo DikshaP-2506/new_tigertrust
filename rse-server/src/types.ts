@@ -7,4 +7,7 @@ successfulRepayments: number
 defaults: number
 humanVerified: boolean
 hasVC: boolean
+activeDaysLast30?: number
+avgTxPerActiveDay?: number
+activityRegularityScore?: number
 }
